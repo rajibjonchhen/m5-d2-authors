@@ -11,6 +11,5 @@ server.use("/authors", authorsRouter)
 console.table(listEndpoints(server))
 
 server.listen(3001,()=>{
-    console.log(`the server is running in ${port}`)
-    
+    console.log(`the server is running in ${port}`) 
 }) 

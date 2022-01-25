@@ -39,7 +39,7 @@ res.status(200).send(authorsArray)
 // for getting  the individual items
 authorsRouter.get("/:authorId",(req,res)=>{
 const authorsArray = JSON.parse(fs.readFileSync(authorsJSONPath))
-const singleAuthor = authorsArray.find(author=> author.id === req.params.authorId)
+const singleAuthor = authorsArray.find(author=> author.authorId === req.params.authorId)
 res.send(singleAuthor)
 })
 // for editing the information
