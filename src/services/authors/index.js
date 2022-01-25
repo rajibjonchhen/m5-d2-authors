@@ -49,8 +49,9 @@ authorsRouter.put("/:authorId",(req,res)=>{
     const index = authorsArray.findIndex(author => author.authorId === req.params.authorId)
     const singleAuthor = authorsArray[index]
     const updatedSingleAuthor = {...singleAuthor, ...req.body, updatedAt: new Date()}
+    authorsArray[index] = updatedSingleAuthor
     fs.writeFileSync(authorsJSONPath, JSON.stringify(authorsArray))
-    res.send(`from put ${req.body}`)
+    res.send(`request body ${req.body} index ${index}`)
 })
 
 // for deleting the items
