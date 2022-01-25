@@ -63,6 +63,7 @@ const authorsArray = JSON.parse(fs.readFileSync(authorsJSONPath))
 const singleAuthor = authorsArray.find(author=> author.authorId === req.params.authorId)
 res.send(singleAuthor)
 })
+
 // for editing the information
 authorsRouter.put("/:authorId",(req,res)=>{
     const authorsArray = JSON.parse(fs.readFileSync(authorsJSONPath))
@@ -72,8 +73,8 @@ authorsRouter.put("/:authorId",(req,res)=>{
 
     let statusCode =''
     let msg=''
-const isEmailTaken = (authorsArray.find(author => author.email === updatedSingleAuthor.email))? true:false
-if(isEmailTaken !== true){
+const isEmailTaken = authorsArray.find(author => author.email === updatedSingleAuthor.email)? true:false
+if(!isEmailTaken){
     authorsArray.push(newAuthor)
     authorsArray[index] = updatedSingleAuthor
     fs.writeFileSync(authorsJSONPath, JSON.stringify(authorsArray))
