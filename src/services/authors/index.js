@@ -12,32 +12,10 @@ const parentFolderPath = dirname(currentFilePath)
 const authorsJSONPath = join(parentFolderPath, "authors.json")
 
 // for creating
-// authorsRouter.post("/", (req, res) => {
-//     // 1. Read the request body obtaining new user's data
-//     console.log("REQUEST BODY: ", req.body)
-  
-//     // 2. Add some server generated informations to the new user (id, creationDate, ....)
-//     const newAuthor = { ...req.body, createdAt: new Date(), id: uniqid() }
-//     console.log(newAuthor)
-  
-//     // 3. Read users.json --> obtaining an array
-//     const authorsArray = JSON.parse(fs.readFileSync(authorsJSONPath))
-  
-//     // 4. Add new user to the array
-//     authorsArray.push(newAuthor)
-  
-//     // 5. Write the array back to the file users.json
-//     fs.writeFileSync(authorsJSONPath, JSON.stringify(authorsArray))
-  
-//     // 6. Send a proper response back
-  
-//     res.status(201).send({ id: newAuthor.id })
-//   })
-
 
 authorsRouter.post("/",(req,res)=>{
 
-console.log(req.body)
+console.log("new post body",req.body)
 
 const newAuthor = {...req.body, createdAt: new Date(), authorId: uniqid() }
 console.log('the new author is',newAuthor)
@@ -51,7 +29,6 @@ fs.writeFileSync(authorsJSONPath, JSON.stringify(authorsArray))
 res.status(201).send({ authorId: newAuthor.authorId })
 
 })
-
 // for getting the list
 authorsRouter.get("/",(req,res)=>{
 const fileContent = fs.readFileSync(authorsJSONPath)
@@ -79,8 +56,8 @@ authorsRouter.put("/:authorId",(req,res)=>{
 // for deleting the items
 authorsRouter.delete("/:authorId",(req,res)=>{
     const authorsArray = JSON.parse(fs.readFileSync(authorsJSONPath))
-    const newArray = authorsArray.find((author) => author.authorId !== req.params.authorId)
+    const newArray = authorsArray.filter(author => author.authorId !== req.params.authorId)
     fs.writeFileSync(authorsJSONPath, JSON.stringify(newArray))
-    res.status(204).send()
+    res.status(204).send(newArray)
 })
 export default  authorsRouter
