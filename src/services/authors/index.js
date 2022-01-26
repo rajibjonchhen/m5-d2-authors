@@ -73,9 +73,8 @@ authorsRouter.put("/:authorId",(req,res)=>{
 
     let statusCode =''
     let msg=''
-const isEmailTaken = authorsArray.find(author => author.email === updatedSingleAuthor.email)? true:false
-if(!isEmailTaken){
-    authorsArray.push(newAuthor)
+    const isEmailTaken = authorsArray.find(author => author.email === updatedSingleAuthor.email)? true:false
+    if(!isEmailTaken){
     authorsArray[index] = updatedSingleAuthor
     fs.writeFileSync(authorsJSONPath, JSON.stringify(authorsArray))
     msg = `successfully updated`
